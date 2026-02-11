@@ -53,20 +53,22 @@
 
 | # | エージェント名 | 役割 | 出力ファイル |
 |---|--------------|------|-------------|
-| ① | 仮説設計 (Hypothesis Architect) | 事業概要→検証すべき仮説に構造分解 | `docs/01_hypothesis.md` |
-| ② | 市場・競合調査 (Market Intelligence) | Web検索で市場規模・競合・トレンド収集 | `docs/02_market_research.md` |
-| ③ | 顧客検証 (Customer Validator) | ペルソナ定義・WTP分析・顧客課題の深掘り | `docs/03_customer_validation.md` |
-| ④ | 財務・収益モデル (Financial Modeler) | ユニットエコノミクス・損益分岐・5年P/L | `docs/04_financial_model.md` + `docs/04_financial_model.csv` |
-| ⑤ | リスク・キルファクター (Risk Analyst) | 致命的リスク・規制・参入障壁の洗い出し | `docs/05_risk_analysis.md` |
-| ⑥ | 統合判定 (Integration Judge) | 全エージェント結果を統合しGo/No-Go判定 | `docs/06_go_nogo_verdict.md` |
+| ① | 仮説設計 (Hypothesis Architect) | 事業概要→検証すべき仮説に構造分解 | `projects/[PJ]/01_hypothesis.md` |
+| ② | 市場・競合調査 (Market Intelligence) | Web検索で市場規模・競合・トレンド収集 | `projects/[PJ]/02_market_research.md` |
+| ③ | 顧客検証 (Customer Validator) | ペルソナ定義・WTP分析・顧客課題の深掘り | `projects/[PJ]/03_customer_validation.md` |
+| ④ | 財務・収益モデル (Financial Modeler) | ユニットエコノミクス・損益分岐・5年P/L | `projects/[PJ]/04_financial_model.md` + `.csv` |
+| ⑤ | リスク・キルファクター (Risk Analyst) | 致命的リスク・規制・参入障壁の洗い出し | `projects/[PJ]/05_risk_analysis.md` |
+| ⑥ | 統合判定 (Integration Judge) | 全エージェント結果を統合しGo/No-Go判定 | `projects/[PJ]/06_go_nogo_verdict.md` |
 
 ### Phase 2: 実行計画チーム（Go判定 + ユーザー承認後）
 
 | # | エージェント名 | 役割 | 出力ファイル |
 |---|--------------|------|-------------|
-| ⑦ | 事業責任者 (Business Lead) | 全体ロードマップ・マイルストーン・予算配分 | `docs/07_business_roadmap.md` |
-| ⑧ | マーケ責任者 (Marketing Lead) | 集客戦略・チャネル設計・KPI | `docs/08_marketing_plan.md` |
-| ⑨ | 営業責任者 (Sales Lead) | セールス戦略・パイプライン設計・KPI | `docs/09_sales_plan.md` |
+| ⑦ | 事業責任者 (Business Lead) | 全体ロードマップ・マイルストーン・予算配分 | `projects/[PJ]/07_business_roadmap.md` |
+| ⑧ | マーケ責任者 (Marketing Lead) | 集客戦略・チャネル設計・KPI | `projects/[PJ]/08_marketing_plan.md` |
+| ⑨ | 営業責任者 (Sales Lead) | セールス戦略・パイプライン設計・KPI | `projects/[PJ]/09_sales_plan.md` |
+
+※ `[PJ]` = `YYYY-MM-DD_事業名`（自動生成）
 
 ---
 
@@ -85,13 +87,43 @@ bizdev-lab/
 │   ├── 07_business_lead.md
 │   ├── 08_marketing_lead.md
 │   └── 09_sales_lead.md
-├── docs/                        # エージェント出力先
-│   └── templates/               # 出力テンプレート
+├── projects/                    # 事業ごとの検証結果（自動生成）
+│   ├── YYYY-MM-DD_事業名/       # 日付_事業名でフォルダ自動作成
+│   │   ├── input.md             # この事業の入力（コピー保存）
+│   │   ├── 01_hypothesis.md
+│   │   ├── 02_market_research.md
+│   │   ├── 03_customer_validation.md
+│   │   ├── 04_financial_model.md
+│   │   ├── 04_financial_model.csv
+│   │   ├── 05_risk_analysis.md
+│   │   ├── 06_go_nogo_verdict.md
+│   │   ├── 07_business_roadmap.md  # Phase 2（Go時のみ）
+│   │   ├── 08_marketing_plan.md    # Phase 2（Go時のみ）
+│   │   └── 09_sales_plan.md        # Phase 2（Go時のみ）
+│   └── ...                      # 過去の検証が全て残る
+├── input.md                     # 現在の検証対象（ここに書く）
 ├── scripts/
-│   └── git_push.sh              # 自動コミット・Pushスクリプト
-├── input.md                     # ユーザーが事業概要を入力するファイル
-└── README.md                    # セットアップガイド
+│   └── git_push.sh
+└── README.md
 ```
+
+---
+
+## プロジェクト管理ルール
+
+### 新規検証の開始時
+1. ユーザーが `input.md` に新しい事業概要を記入する
+2. Phase 1 開始時に、エージェントは `projects/YYYY-MM-DD_事業名/` フォルダを自動作成する
+3. 事業名は `input.md` の「事業名」フィールドから取得し、スペースはハイフンに置換する
+4. `input.md` の内容もプロジェクトフォルダにコピー保存する
+5. 全出力はプロジェクトフォルダ内に保存する（`docs/` ではなく `projects/YYYY-MM-DD_事業名/` に出力）
+
+### 過去の検証を再実行する場合
+- ユーザーが「projects/YYYY-MM-DD_事業名/ を再検証して」と指示する
+- そのフォルダ内の `input.md` を読み込み、同じフォルダ内のファイルを上書き更新する
+
+### 過去の検証を参照する場合
+- ユーザーが「過去の検証一覧を見せて」と指示すると、`projects/` 配下の全フォルダと各判定結果を一覧表示する
 
 ---
 
@@ -102,7 +134,7 @@ bizdev-lab/
 1. **言語**: 全出力は日本語で記述する
 2. **Web検索**: `--tool web_search` を積極的に使用し、リアルタイムデータを取得する
 3. **データの根拠**: 数値・統計は必ず出典を明記する（URL付き）
-4. **ファイル出力**: 各エージェントは指定のファイルに出力する
+4. **ファイル出力**: 各エージェントは `projects/YYYY-MM-DD_事業名/` 配下の指定ファイルに出力する
 5. **前工程の参照**: 後続エージェントは先行エージェントの出力を必ず読み込んでから作業する
 6. **スモールスタート前提**: 「ユーザー1人 + AI」で始められる規模感を常に意識する
 
@@ -139,7 +171,8 @@ bizdev-lab/
 
 - Phase 1完了時: `feat: Phase 1 - 仮説検証完了 [事業名]`
 - Phase 2完了時: `feat: Phase 2 - 実行計画完了 [事業名]`
-- スクリプト: `scripts/git_push.sh` を使用
+- 再検証時: `update: 再検証 [事業名]`
+- コミット対象: `projects/` 配下の該当プロジェクトフォルダ
 
 ---
 
