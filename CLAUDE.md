@@ -191,13 +191,24 @@ bizdev-lab/
    - `10_financial_plan.xlsx` — 財務管理シート
 3. 全成果物をGitに自動コミット・Push
 
-### Git自動コミット
+### Git自動コミット・Push
 
+**重要**: 各Phase完了時およびプロジェクト更新時は、コミット後に自動でリモートにpushすること。
+
+#### コミットメッセージ
 - Phase 1完了時: `feat: Phase 1 - 仮説検証完了 [事業名]`
 - Phase 2完了時: `feat: Phase 2 - 実行計画完了 [事業名]`
 - Phase 3完了時: `feat: Phase 3 - 実行管理シート完了 [事業名]`
 - 再検証時: `update: 再検証 [事業名]`
+
+#### 実行手順
+1. `git add projects/[プロジェクトフォルダ]/` で変更をステージング
+2. `git commit -m "[コミットメッセージ]"` でコミット
+3. `git push origin main` で自動プッシュ（**必須**）
+
+#### 対象
 - コミット対象: `projects/` 配下の該当プロジェクトフォルダ
+- プッシュ先: `origin main`
 
 ---
 
